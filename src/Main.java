@@ -4,11 +4,12 @@ import driver.DriverC;
 import driver.DriverD;
 import transport.*;
 
-import java.util.List;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws IllegalAccessException {
         Mechanic<Car> ivan = new Mechanic<Car>("Иван", "Иванов", "Нео");
+        Mechanic<Car> evgenia = new Mechanic<Car>("Женя", "Иванов", "Нео");
         Sponsor gazprom = new Sponsor("Газпром", 10000000);
         Mechanic<Bus> stepan = new Mechanic<>("Степан", "Петров", "Ромашка");
 
@@ -36,33 +37,49 @@ public class Main {
         isuzu.pitstop();
 
 
-
         DriverD vasiliy = new DriverD("Vasiliy", true, 10, "d");
 
 
-
-
-        List<Transport> transports = List.of(lada, audi, bmw, kia,
+        List<Transport> transports = Arrays.asList(lada, lada, audi, bmw, kia,
                 mercedes2, mercedes, paz, baz,
                 gaz, isuzu, fuso, kamaz);
-        for (Transport transport : transports){
-            System.out.println("__________________________________________");
+
+        Set<Transport> transportSet = new HashSet<>(transports);
+
+        for (Transport transport : transports) {
+            System.out.println("__________________________________________list");
             printInfo(transport);
         }
 
+
+        for (Transport transport : transportSet) {
+            System.out.println("__________________________________________set");
+            printInfo(transport);
+        }
+
+
+        Map<Transport, Mechanic<? extends Transport>> mechanicMap = new HashMap<>();
+        mechanicMap.put(lada, ivan);
+        mechanicMap.put(lada, evgenia);
+        mechanicMap.put(mercedes, stepan);
+
+        System.out.println("___________-mechanicMap______ " + mechanicMap.get(lada).getName());
+
+        System.out.println("___________-mechanicMap______ " + mechanicMap.get(mercedes).getName());
     }
-private  static void printInfo(Transport transport) {
-    System.out.println("Автомобиль " + transport.getBrand() + " " + transport.getModel());
-    for (Driver<?> driver : transport.getDrivers()){
-        System.out.println("Водители : " + driver.getName());
+
+    private static void printInfo(Transport transport) {
+        System.out.println("Автомобиль " + transport.getBrand() + " " + transport.getModel());
+        for (Driver<?> driver : transport.getDrivers()) {
+            System.out.println("Водители : " + driver.getName());
+        }
+        for (Mechanic<?> mechanic : transport.getMechanics()) {
+            System.out.println("Механики : " + mechanic.getName());
+        }
+        for (Sponsor sponsor : transport.getSponsors()) {
+            System.out.println("Спонсоры : " + sponsor.getName());
+        }
     }
-    for (Mechanic<?> mechanic : transport.getMechanics()){
-        System.out.println("Механики : " + mechanic.getName());
-    }
-    for (Sponsor sponsor : transport.getSponsors()){
-        System.out.println("Спонсоры : " + sponsor.getName());
-    }
-}
 }
 
 
