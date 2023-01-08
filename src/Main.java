@@ -38,14 +38,26 @@ public class Main {
 
 
         DriverD vasiliy = new DriverD("Vasiliy", true, 10, "d");
-
+        DriverB anton = new DriverB("Anton", true, 10, "b");
 
         List<Transport> transports = Arrays.asList(lada, lada, audi, bmw, kia,
                 mercedes2, mercedes, paz, baz,
                 gaz, isuzu, fuso, kamaz);
 
+        List<Driver> drivers = Arrays.asList(vasiliy, anton, vasiliy);
         Set<Transport> transportSet = new HashSet<>(transports);
 
+        Set<Driver> driverSet = new HashSet<>(drivers);
+        System.out.println("list Водители: ");
+        for (Driver driver : drivers) {
+
+            System.out.println(driver);
+        }
+
+        System.out.println("Set Водители : ");
+        for (Driver driver : driverSet){
+            System.out.println(driver);
+        }
         for (Transport transport : transports) {
             System.out.println("__________________________________________list");
             printInfo(transport);
